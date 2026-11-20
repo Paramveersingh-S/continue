@@ -1,0 +1,58 @@
+---
+title: "Swizzle Runtime"
+description: "Configure Swizzle Runtime (`swizzle-rt`) with Continue for local OpenAI-compatible inference and Predicted Outputs Fast-Apply"
+---
+
+<Info>
+  Get started with [Swizzle Runtime (`swizzle-rt`)](https://github.com/Swizzle-AI/swizzle-runtime) — single-binary Rust/CUDA/Vulkan local LLM inference with OpenAI `prediction` (Fast-Apply) support.
+</Info>
+
+## Quick Setup
+
+Start `swizzle-rt` locally on port `8080` (or generate a Continue preset automatically with `swizzle-rt ide-config --ide continue`):
+
+```bash
+swizzle-rt serve /path/to/Qwen2.5-Coder-7B-Instruct-Q4_K_M.gguf --port 8080
+```
+
+## Configuration
+
+Use Continue's built-in `openai` provider pointed at your local `swizzle-rt` endpoint:
+
+<Tabs>
+  <Tab title="YAML">
+  ```yaml title="config.yaml"
+  name: Swizzle Local Config
+  version: 0.0.1
+  schema: v1
+
+  models:
+    - name: Swizzle Coder 7B
+      provider: openai
+      model: Qwen/Qwen2.5-Coder-7B-Instruct
+      apiBase: http://localhost:8080/v1
+      apiKey: swizzle-local
+      roles:
+        - chat
+        - edit
+        - apply
+        - autocomplete
+  ```
+  </Tab>
+  <Tab title="JSON (Deprecated)">
+  ```json title="config.json"
+  {
+    "models": [
+      {
+        "title": "Swizzle Coder 7B",
+        "provider": "openai",
+        "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+        "apiBase": "http://localhost:8080/v1",
+        "apiKey": "swizzle-local",
+        "roles": ["chat", "edit", "apply", "autocomplete"]
+      }
+    ]
+  }
+  ```
+  </Tab>
+</Tabs>
